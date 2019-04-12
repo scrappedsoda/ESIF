@@ -16,6 +16,9 @@
  * =====================================================================================
  */
 
+// Important -> parameterized things need their methods defined in the header instead of
+// a separate .cpp file. This has to do with compiler issues. Source:
+// https://www.doulos.com/knowhow/systemc/faq/#q2
 #include "full-adder.h"
 
 template <int size=4>

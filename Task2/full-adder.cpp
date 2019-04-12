@@ -8,7 +8,7 @@
  *        Version:  1.0
  *        Created:  04/11/2019 11:02:02 AM
  *       Revision:  none
- *       Compiler:  gcc
+ *       Compiler:  g++
  *
  *         Author:  Glinserer Andreas (AGL), 
  *   Organization:  

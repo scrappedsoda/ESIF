@@ -8,7 +8,7 @@
  *        Version:  1.0
  *        Created:  04/10/2019 06:37:55 PM
  *       Revision:  none
- *       Compiler:  gcc
+ *       Compiler:  g++
  *
  *         Author:  YOUR NAME (), 
  *   Organization:  
