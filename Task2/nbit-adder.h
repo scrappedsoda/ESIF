@@ -17,23 +17,23 @@
  */
 
 #include "full-adder.h"
-//#include <string.h>
 
 template <int size=4>
 SC_MODULE (nbit_adder) {
 		// The input and output signals
-		sc_in<sc_uint<size>> in_a;
-		sc_in<sc_uint<size>> in_b;
-		sc_in<sc_uint<1>> in_cin;
+		sc_in<sc_uint<size> > in_a;
+		sc_in<sc_uint<size> > in_b;
+		sc_in<bool> in_cin;
 
-		sc_out<sc_uint<size>> out_s;
-		sc_out<sc_uint<1>> out_c;
+		sc_out<sc_uint<size> > out_s;
+		sc_out<bool> out_c;
 
 		// intermediate signals or signals i need to convert from vector to single signal
-		sc_signal<sc_uint<1> > tmp_a[size];
-		sc_signal<sc_uint<1> > tmp_b[size];
-		sc_signal<sc_uint<1> > tmp_c[size];
-		sc_signal<sc_uint<1> > tmp_s[size];
+		sc_signal<bool> tmp_a[size];
+		sc_signal<bool> tmp_b[size];
+		sc_signal<bool> tmp_c[size];
+		sc_signal<bool> tmp_s[size];
+
 		
 		// the array of full adders declaration
 		full_adder *faddas[size];		// faddas = full adders (addas)
@@ -69,7 +69,11 @@ SC_MODULE (nbit_adder) {
 			sensitive << in_a << in_b << in_cin;
 			// The method which merges the output vectors
 			SC_METHOD(merge);
-			sensitive << out_s << out_c;
+			for (int i = 0; i < size; i++) {
+					sensitive << tmp_s[i] << tmp_c[i];
+			}
+			//sensitive << in_a << in_b << in_cin;
+			//sensitive << tmp_s << tmp_c;
 
 		}
 
@@ -87,8 +91,8 @@ void nbit_adder<size>::split(void) {
 		sc_uint<size> tmp_bus_b = nbit_adder<size>::in_b.read();
 		
 		for (int i = 0; i < size; i++) {
-				(nbit_adder<size>::tmp_a[i]).write(tmp_bus_a[i]);
-				(nbit_adder<size>::tmp_b[i]).write(tmp_bus_b[i]);
+				nbit_adder<size>::tmp_a[i] = tmp_bus_a[i];
+				nbit_adder<size>::tmp_b[i] = tmp_bus_b[i];
 		}
 }
 
@@ -96,7 +100,7 @@ template <int size>
 void nbit_adder<size>::merge(void) {
 		sc_uint<size> tmp_bus_s; 
 		for (int i = 0; i < size; i++) {
-				tmp_bus_s[i] = nbit_adder<size>::tmp_s[i].read();
+				tmp_bus_s[i] = nbit_adder<size>::tmp_s[i];
 		}
 		nbit_adder<size>::out_s.write(tmp_bus_s);
 		nbit_adder<size>::out_c.write(nbit_adder<size>::tmp_c[size-1]);

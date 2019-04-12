@@ -20,5 +20,6 @@
 
 
 void full_adder::carry_or(void) {
-		full_adder::out_cout.write(full_adder::c1.read() | full_adder::c2.read());
+		full_adder::out_cout = full_adder::c1 | full_adder::c2;
+//		full_adder::out_cout.write(full_adder::c1.read() | full_adder::c2.read());
 }

@@ -24,9 +24,9 @@ SC_MODULE(tb)
 {
 		sc_in<bool> in_clk;
 		sc_out<sc_uint<size>> 	in_a, in_b; 
-		sc_out<sc_uint<1>> 		in_cin;
+		sc_out<bool> 		in_cin;
 		sc_in<sc_uint<size>> 	out_s;
-		sc_in<sc_uint<1>> 	out_c;
+		sc_in<bool> 	out_c;
 
 		void source(void);		// creates the values
 		void sink(void);		// reads the values
@@ -52,7 +52,7 @@ void tb<size>::source(void) {
 		  
 		sc_uint<size> tmp_a=0; 
 		sc_uint<size> tmp_b=0;
-		sc_uint<1> tmp_c=0;
+		bool tmp_c=0;
 		// send stimulus to the ha
 		for (int i = 0; i < 8; i++)
 		{
@@ -61,24 +61,31 @@ void tb<size>::source(void) {
 				in_a.write(tmp_a);
 				in_b.write(tmp_b);
 				in_cin.write(tmp_c);
+				cout << i << ":\t a:" << tmp_a.to_int() << ",\t b:" << tmp_b.to_int() << endl;
 				wait();
 		}
+		tmp_a = 32;
+		tmp_b = 32;
+		in_a.write(tmp_a);
+		in_b.write(tmp_b);
+		wait();
+
 }
 
 // check (here write) the signals which come from the DUT
 template <int size>
 void tb<size>::sink(void) {
 		sc_uint<size> tmp_s;
-		sc_uint<1> tmp_c;
+		bool tmp_c;
 		// Read output from the DUT
-		wait();
+		//wait();
 		  
-		for( int i = 0; i < 8; i++)
+		for( int i = 0; i < 12; i++)
 		{
 				tmp_s = out_s.read();
 				tmp_c = out_c.read();
+				cout << i << ":\t s:" << tmp_s.to_int() << ",\t c:" << tmp_c << endl;
 				wait();
-				cout << i << ":\t s:" << tmp_s.to_int() << ",\t c:" << tmp_c.to_int() << endl;
 		}
 
 		// End simulation

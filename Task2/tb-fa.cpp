@@ -17,11 +17,10 @@
  */
 
 
-#include "tb.h"
+#include "tb-fa.h"
 
 // here are the stimulus generated
-template <int size>
-void tb<size>::source(void) {
+void tb::source(void) {
 		// Reset
 		/* 
 		 * inp.write(0);
@@ -31,9 +30,9 @@ void tb<size>::source(void) {
 		 * wait();
 		 * creates one full reset */
 
-		sc_uint<1> tmp_a=0; 
-		sc_uint<1> tmp_b=0;
-		sc_uint<1> tmp_c=0;
+		bool tmp_a=0; 
+		bool tmp_b=0;
+		bool tmp_c=0;
 		// send stimulus to the ha
 		for (int i = 0; i < 8; i++)
 		{
@@ -48,10 +47,9 @@ void tb<size>::source(void) {
 }
 
 // check (here write) the signals which come from the DUT
-template <int size>
-void tb<size>::sink(void) {
-		sc_uint<size> 	tmp_s;
-		sc_uint<1>		tmp_c;
+void tb::sink(void) {
+		bool tmp_s;
+		bool tmp_c;
 		//
 		// Read output from the DUT
 		wait();
@@ -60,7 +58,7 @@ void tb<size>::sink(void) {
 				tmp_s = out_s.read();
 				tmp_c = out_c.read();
 				wait();
-				cout << i << ":\t s:" << tmp_s.to_int() << ",\t c:" << tmp_c.to_int() << endl;
+				cout << i << ":\t s:" << tmp_s << ",\t c:" << tmp_c << endl;
 		}
 
 		// End simulation

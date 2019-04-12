@@ -3,8 +3,8 @@
 #include "systemc.h"
 
 struct half_adder: sc_module {
-		sc_in<sc_uint<1>> in_a, in_b;
-		sc_out<sc_uint<1>> out_s, out_c;
+		sc_in<bool> in_a, in_b;
+		sc_out<bool> out_s, out_c;
 		SC_CTOR(half_adder)
 		{
 				SC_METHOD(addIt)

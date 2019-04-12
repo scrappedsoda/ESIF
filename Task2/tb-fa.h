@@ -21,8 +21,8 @@
 SC_MODULE(tb) 
 {
 		sc_in<bool> in_clk;
-		sc_out<sc_uint<1>> in_a, in_b, in_cin;
-		sc_in<sc_uint<1>> out_s, out_c;
+		sc_out<bool> in_a, in_b, in_cin;
+		sc_in<bool> out_s, out_c;
 
 		void source(void);		// creates the values
 		void sink(void);		// reads the values

@@ -25,8 +25,8 @@ SC_MODULE( SYSTEM) {
 		full_adder	*fa0;
 
 		// signals which connect them
-		sc_signal <sc_uint<1>> sig_a, sig_b, sig_cin;
-		sc_signal <sc_uint<1>> sig_s, sig_c;
+		sc_signal <bool> sig_a, sig_b, sig_cin;
+		sc_signal <bool> sig_s, sig_c;
 		sc_clock sig_clk;
 
 		// Constructor
@@ -64,7 +64,7 @@ int sc_main(int argc, char* argv[]) {
 		top = new SYSTEM("top");
 
 		// put everything into a vcd file
-		sc_trace_file *wf = sc_create_vcd_trace_file("main");
+		sc_trace_file *wf = sc_create_vcd_trace_file("main-fa");
 		// variables to be traced
 		sc_trace(wf, top->sig_a, "sig_a");
 		sc_trace(wf, top->sig_b, "sig_b");

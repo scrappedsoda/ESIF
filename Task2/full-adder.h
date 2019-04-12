@@ -19,10 +19,10 @@
 #include "half-adder.h"
 
 struct full_adder: sc_module {
-		sc_in<sc_uint<1>> in_a, in_b, in_cin;
-		sc_out<sc_uint<1>> out_s, out_cout;
+		sc_in<bool> in_a, in_b, in_cin;
+		sc_out<bool> out_s, out_cout;
 
-		sc_signal<sc_uint<1>> s1,c1,c2;
+		sc_signal<bool> s1,c1,c2;
 
 		half_adder *ha0;
 		half_adder *ha1;

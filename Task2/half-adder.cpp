@@ -20,7 +20,7 @@
 
 void half_adder::addIt(void)
 {
-		half_adder::out_s.write(half_adder::in_a.read() xor half_adder::in_b.read());
-		half_adder::out_c.write(half_adder::in_a.read() and half_adder::in_b.read());
+		half_adder::out_s = half_adder::in_a ^ half_adder::in_b;
+		half_adder::out_c = half_adder::in_a & half_adder::in_b;
 }
 

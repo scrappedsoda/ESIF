@@ -26,10 +26,10 @@ SC_MODULE( SYSTEM) {
 		nbit_adder<width>	*add0;
 
 		// signals which connect them
-		sc_signal <sc_uint<width>> sig_a, sig_b;
-	    sc_signal <sc_uint<1>> sig_cin;
-		sc_signal <sc_uint<width>> sig_s;
-		sc_signal <sc_uint<1>> sig_c;
+		sc_signal <sc_uint<width> > sig_a, sig_b;
+	    sc_signal <bool> sig_cin;
+		sc_signal <sc_uint<width> > sig_s;
+		sc_signal <bool> sig_c;
 		sc_clock sig_clk;
 
 		// Constructor
