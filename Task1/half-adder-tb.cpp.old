@@ -1,0 +1,63 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  half-adder-tb.cpp
+ *
+ *    Description:  testbench for the half adder
+ *
+ *        Version:  1.0
+ *        Created:  04/10/2019 06:37:55 PM
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  YOUR NAME (), 
+ *   Organization:  
+ *
+ * =====================================================================================
+ */
+
+#include "half-adder.h"
+
+
+int sc_main(int argc, char* argv[]) {
+
+	sc_signal<bool> a,b,s,c;
+	sc_signal<bool> clk;
+
+	half_adder hadd("hadd");
+	hadd.in_clk(clk);
+	hadd.in_a(a);
+	hadd.in_b(b);
+	hadd.out_c(c);
+	hadd.out_s(s);
+
+//	sc_start(1, SC_SEC);	
+	
+
+	// Open VCD file
+	sc_trace_file *wf = sc_create_vcd_trace_file("half_adder");
+	// Dump desired sigs
+	sc_trace(wf, clk, "clock");
+	sc_trace(wf, a, "A");
+	sc_trace(wf, b, "B");
+	sc_trace(wf, s, "S");
+	sc_trace(wf, c, "C");
+
+	
+	a = 0;
+	b = 0;
+	clk=0;
+	sc_start(1, SC_NS);
+	a = 1;
+	b = 0;
+	clk=1;
+	sc_start(1, SC_NS);
+	a = 0;
+	b = 1;
+	clk=0;
+	sc_start(1, SC_NS);
+	a = 1;
+	b = 1;
+	clk=1;
+	sc_start(1, SC_NS);
+}

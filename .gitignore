@@ -1,0 +1,5 @@
+*.pdf
+examples/*
+scv*
+systemc*
+*.vcd
