@@ -18,6 +18,25 @@
  */
 
 #include "systemc.h"
+#include <cstdlib>
+#include <ctime>
+
+#define RUNS (100)
+
+// use cerr for assert debug messages
+#define ASSERT(expr, message)  \
+  do {                         \
+    if (!(expr)) {             \
+      cerr << message << endl; \
+    }                          \
+  } while (0)
+// use assert
+//#define ASSERT(expr, message) do {assert(expr);}while(0)
+
+typedef struct {
+  unsigned int a, b, expectedSum;
+  bool expectedCarry;
+} TestPattern_t;
 
 template <int size=4>
 SC_MODULE(tb) 
@@ -35,7 +54,13 @@ SC_MODULE(tb)
 		{
 				SC_CTHREAD(source, in_clk.pos() );
 				SC_CTHREAD(sink, in_clk.pos() );
+				generatePatterns();
 		}
+
+		private:
+			TestPattern_t patterns[RUNS];
+			void generatePatterns(void);
+			TestPattern_t generatePattern(void);
 };
 
 template <int size>
@@ -53,23 +78,18 @@ void tb<size>::source(void) {
 		sc_uint<size> tmp_a=0; 
 		sc_uint<size> tmp_b=0;
 		bool tmp_c=0;
-		// send stimulus to the ha
-		for (int i = 0; i < 8; i++)
+		// send stimulus to the n-bit adder
+		for (int i = 0; i < RUNS; i++)
 		{
-				tmp_a = i;
-				tmp_b = i/2;
-				in_a.write(tmp_a);
-				in_b.write(tmp_b);
-				in_cin.write(tmp_c);
-				cout << i << ":\t a:" << tmp_a.to_int() << ",\t b:" << tmp_b.to_int() << endl;
-				wait();
+			TestPattern_t pattern = patterns[i];
+			tmp_a = pattern.a;
+			tmp_b = pattern.b;
+			in_a.write(tmp_a);
+			in_b.write(tmp_b);
+			in_cin.write(tmp_c);
+			cout << i << ":\t a:" << tmp_a.to_int() << ",\t b:" << tmp_b.to_int() << endl;
+			wait();
 		}
-		tmp_a = 32;
-		tmp_b = 32;
-		in_a.write(tmp_a);
-		in_b.write(tmp_b);
-		wait();
-
 }
 
 // check (here write) the signals which come from the DUT
@@ -78,14 +98,19 @@ void tb<size>::sink(void) {
 		sc_uint<size> tmp_s;
 		bool tmp_c;
 		// Read output from the DUT
-		//wait();
+		wait();
 		  
-		for( int i = 0; i < 12; i++)
+		for( int i = 0; i < RUNS; i++)
 		{
-				tmp_s = out_s.read();
-				tmp_c = out_c.read();
-				cout << i << ":\t s:" << tmp_s.to_int() << ",\t c:" << tmp_c << endl;
-				wait();
+			TestPattern_t pattern = patterns[i];
+			tmp_s = out_s.read();
+			tmp_c = out_c.read();
+			ASSERT(pattern.expectedSum == tmp_s.to_uint(), 
+				"sum error expected " << pattern.expectedSum << " actual: " << tmp_s.to_uint());
+			ASSERT(pattern.expectedCarry == tmp_c, 
+				"carry error expected " << pattern.expectedCarry << " actual: " << tmp_c);
+			cout << i << ":\t s:" << tmp_s.to_int() << ",\t c:" << tmp_c << endl;
+			wait();
 		}
 
 		// End simulation
@@ -93,3 +118,22 @@ void tb<size>::sink(void) {
 		
 }
 
+template <int size>
+TestPattern_t tb<size>::generatePattern(void) {
+  TestPattern_t pattern;
+  const unsigned int max_number = (1 << size) - 1;
+  pattern.a = rand() % max_number + 1;
+  pattern.b = rand() % max_number + 1;
+  pattern.expectedSum = (pattern.a + pattern.b) & max_number;
+  pattern.expectedCarry = (pattern.a + pattern.b) > max_number ? true : false;
+  return pattern;
+}
+
+
+template <int size>
+void tb<size>::generatePatterns(void) {
+	srand(time(NULL));
+	for(int i = 0; i < RUNS; i++) {
+		patterns[i] = generatePattern();
+	}
+}
