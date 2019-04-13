@@ -5,15 +5,15 @@ TB		= tb
 OBJS    = $(PROJECT).o
 
 
-export SYSTEMC_HOME =/home/ldis/ESIF/systemc-2.3.3
+export SYSTEMC_HOME ?=/home/ldis/ESIF/systemc-2.3.3
 
 all: prog run
 
 progfa: 
-	g++ -I. -I$(SYSTEMC_HOME)/include -L. -L$(SYSTEMC_HOME)/lib-linux64 -Wl,-rpath=$(SYSTEMC_HOME)/lib-linux64 -o main-fa main-fa.cpp $(TB)-fa.cpp $(PROJECT).cpp $(USES).cpp -lsystemc -lm -lstdc++
+	g++ -I. -I$(SYSTEMC_HOME)/include -L. -L$(SYSTEMC_HOME)/lib-linux64 -Wl,-rpath=$(SYSTEMC_HOME)/lib-linux64 -o main-fa main-fa.cpp $(TB)-fa.cpp $(PROJECT).cpp $(USES).cpp -lsystemc -lm -lstdc++ -std=c++14
 
 prog:
-	g++ -I. -I$(SYSTEMC_HOME)/include -L. -L$(SYSTEMC_HOME)/lib-linux64 -Wl,-rpath=$(SYSTEMC_HOME)/lib-linux64 -o main main.cpp $(PROJECT).cpp  $(USES).cpp -lsystemc -lm -lstdc++
+	g++ -I. -I$(SYSTEMC_HOME)/include -L. -L$(SYSTEMC_HOME)/lib-linux64 -Wl,-rpath=$(SYSTEMC_HOME)/lib-linux64 -o main main.cpp $(PROJECT).cpp  $(USES).cpp -lsystemc -lm -lstdc++ -std=c++14
 
 runfa:
 	./main-fa
