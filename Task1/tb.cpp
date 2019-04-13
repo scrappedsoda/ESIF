@@ -19,6 +19,11 @@
 
 #include "tb.h"
 
+// use cerr for assert debug messages
+#define ASSERT(expr, message) do {if (!(expr)){cerr<<message<<endl;}}while(0)
+// use assert
+//#define ASSERT(expr, message) do {assert(expr);}while(0)
+
 TestPattern_t tb::getPattern(int i) {
 	TestPattern_t pattern;
 	pattern.a = i%2;
@@ -68,14 +73,12 @@ void tb::sink(void) {
 
 				// assert correct values for out_s and out_c
 				TestPattern_t pattern = getPattern(i);
-				if (pattern.expectedSumBit != tmp_s.to_uint()) {
-					cerr << "sum bit error expected: " 
-						<< pattern.expectedSumBit << " actual: " << tmp_s.to_uint() << endl;
-				}
-				if (pattern.expectedCarryBit != tmp_c.to_uint()) {
-					cerr << "carry bit error expected: " 
-						<< pattern.expectedCarryBit << " actual: " << tmp_c.to_uint() << endl;
-				}
+
+				ASSERT(pattern.expectedSumBit == tmp_s.to_uint(), 
+					"sum bit error expected: " << pattern.expectedSumBit << " actual: " << tmp_s.to_uint());
+
+				ASSERT(pattern.expectedCarryBit == tmp_c.to_uint(), 
+					"carry bit error expected: " << pattern.expectedCarryBit << " actual: " << tmp_c.to_uint());
 		}
 		// End simulation
 		sc_stop();		// stops the simulation and calls the modules destructor
