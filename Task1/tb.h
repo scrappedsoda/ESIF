@@ -18,6 +18,13 @@
 
 #include "systemc.h"
 
+typedef struct {
+	unsigned int a, 
+		b, 
+		expectedSumBit,
+		expectedCarryBit;
+} TestPattern_t;
+
 SC_MODULE(tb) 
 {
 		sc_in<bool> in_clk;
@@ -26,6 +33,8 @@ SC_MODULE(tb)
 
 		void source(void);		// creates the values
 		void sink(void);		// reads the values
+
+		TestPattern_t getPattern(int i);
 
 		SC_CTOR(tb)
 		{

@@ -3,3 +3,9 @@ examples/*
 scv*
 systemc*
 *.vcd
+.vscode/ipch/*
+.vscode/c_cpp_properties.json
+Task0/hello
+Task1/main
+Task1/*.cpp.o
+Task2/main
