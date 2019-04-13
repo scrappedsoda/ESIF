@@ -20,6 +20,7 @@
 // a separate .cpp file. This has to do with compiler issues. Source:
 // https://www.doulos.com/knowhow/systemc/faq/#q2
 #include "full-adder.h"
+#include <string>
 
 template <int size=4>
 SC_MODULE (nbit_adder) {
@@ -48,8 +49,10 @@ SC_MODULE (nbit_adder) {
 		// constructor
 		SC_CTOR(nbit_adder) {
 			// initialising this whole thing with the full adders
+			std::string name;
 			for (int i = 0; i < size; i++) {
-					faddas[i] = new full_adder("fa");
+					name = "fa" + std::to_string(i);
+					faddas[i] = new full_adder(name.c_str());
 			}
 			// the first full adder has to be done by hand
 			faddas[0] -> in_a(tmp_a[0]);
