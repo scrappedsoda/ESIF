@@ -3,7 +3,8 @@ TB		= tb
 OBJS    =    \
 	tb.cpp.o \
 	grey-scale.cpp.o \
-	main.cpp.o
+	main.cpp.o \
+	libbmp.cpp.o
 
 export SYSTEMC_HOME ?=/home/ldis/ESIF/systemc-2.3.3
 CXX = g++

@@ -15,10 +15,12 @@
  *
  * =====================================================================================
  */
+#define DEBUG 0
 
 #include "grey-scale.h"
 #include "systemc.h"
 #include "tb.h"
+
 
 SC_MODULE(SYSTEM) {
     tb *tb0;

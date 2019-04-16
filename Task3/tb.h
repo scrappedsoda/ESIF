@@ -30,8 +30,18 @@ SC_MODULE(tb)
 
 		SC_CTOR(tb)
 		{
-				SC_CTHREAD(source, in_clk.pos() );
-				SC_CTHREAD(sink, in_clk.pos() );
+				// changed to thread because these are easier to handle (at least for me)
+				// the big advantage is the possibility to use sc_wait with times
+				//
+				// source triggers at neg edge to simulate something like data has to be 
+				// there before the edge (setup_time)
+				SC_THREAD(source);
+				sensitive << in_clk.neg();
+				SC_THREAD(sink);
+				sensitive << in_clk.pos();
+
+//				SC_CTHREAD(source, in_clk.neg() );
+//				SC_CTHREAD(sink, in_clk.pos() );
 		}
 
 };
