@@ -34,4 +34,4 @@ simulate:
 	gtkwave main.vcd &
 
 clean:
-	rm -rf $(OBJS) main main.vcd
+	rm -rf $(OBJS) main main.vcd test_out.bmp
