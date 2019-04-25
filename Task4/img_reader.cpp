@@ -35,10 +35,10 @@ void img_reader::reader() {
 						tmp_b = img.blue_at(i,j);
 						out->d_write(tmp_r, tmp_g, tmp_b);
 
-#ifdef DEBUG
-						cout << "j: " << j << "\ti: " << i << "\t\t";
-						cout << tmp_r << " " << tmp_g << " " << tmp_b << endl;
-#endif
+//#ifdef DEBUG
+//						cout << "j: " << j << "\ti: " << i << "\t\t";
+//						cout << tmp_r << " " << tmp_g << " " << tmp_b << endl;
+//#endif
 						wait();
 				}
 		}

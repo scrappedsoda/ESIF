@@ -33,10 +33,10 @@ void img_writer::writer(void) {
 						tout_g = std::get<1>(datain);
 						tout_b = std::get<2>(datain);
 						
-#ifdef DEBUG
-						cout << "j: " << j << "\ti: " << i << "\t\t";
-						cout << tout_r << " " << tout_g << " " << tout_b << endl;
-#endif
+//#ifdef DEBUG
+//						cout << "j: " << j << "\ti: " << i << "\t\t";
+//						cout << tout_r << " " << tout_g << " " << tout_b << endl;
+//#endif
 
 						img.set_pixel(i, j, tout_r, tout_g, tout_b);
 						wait();
