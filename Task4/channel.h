@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  channel_if.cpp
+ *       Filename:  channel.h
  *
  *    Description:  
  *
@@ -36,6 +36,7 @@ class channel : public sc_module, public channel_write_if, public channel_read_i
 				data[1] = datag;
 				data[2] = datab;
 			}
+
 			std::tuple<sc_uint<8>, sc_uint<8>, sc_uint<8>> d_read() 
 			{
 				return std::make_tuple(data[0], data[1], data[2]);
