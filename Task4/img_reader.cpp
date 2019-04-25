@@ -21,15 +21,15 @@ void img_reader::reader() {
 		img.read("test2.bmp");
 
 		int width  = img.get_width();
-		int heigth = img.get_height();
+		int height = img.get_height();
 
 #ifdef DEBUG
 		cout << "Image" << endl;
-		cout << "width: " << width << "\theigth: " << heigth << endl;
+		cout << "width: " << width << "\theight: " << height << endl;
 #endif
 
 		for (int i = width-1; i >= 0; i--) {
-				for (int j = heigth-1; j >= 0; j--) {
+				for (int j = height-1; j >= 0; j--) {
 						tmp_r = img.red_at(i,j);
 						tmp_g = img.green_at(i,j);
 						tmp_b = img.blue_at(i,j);
