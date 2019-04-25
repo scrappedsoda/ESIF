@@ -23,23 +23,15 @@ class channel : public sc_module, public channel_write_if, public channel_read_i
 {
 		private:
 			sc_uint<8> data[3];
+			bool data_valid;
 
 		public:
-			channel(sc_module_name nm) : sc_module(nm)
-			{
-				
-			}
+			channel(sc_module_name nm) : sc_module(nm), data_valid(false){
 
-			void d_write(char datar, char datag, char datab) 
-			{
-				data[0] = datar;
-				data[1] = datag;
-				data[2] = datab;
 			}
-
-			std::tuple<sc_uint<8>, sc_uint<8>, sc_uint<8>> d_read() 
-			{
-				return std::make_tuple(data[0], data[1], data[2]);
-			}
+			
+			void d_write(char datar, char datag, char datab);
+			
+			bool d_read(std::tuple<sc_uint<8>, sc_uint<8>, sc_uint<8>>& rgb);
 
 };

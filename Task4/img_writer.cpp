@@ -24,14 +24,21 @@ void img_writer::writer(void) {
   
 		wait();
 		
+		std::tuple<sc_uint<8>, sc_uint<8>, sc_uint<8>> rgb;
+		bool data_valid;
+
+		// wait until the first pixel arrived
+		while (!(data_valid = in->d_read(rgb))) {
+			wait();
+		}
 		// The image part
 		for (int i = sink_width-1; i >= 0; i--) {
 				for (int j = sink_height-1; j >= 0; j--) {
-						auto datain = in->d_read();
+						
 
-						tout_r = std::get<0>(datain);
-						tout_g = std::get<1>(datain);
-						tout_b = std::get<2>(datain);
+						tout_r = std::get<0>(rgb);
+						tout_g = std::get<1>(rgb);
+						tout_b = std::get<2>(rgb);
 						
 //#ifdef DEBUG
 //						cout << "j: " << j << "\ti: " << i << "\t\t";
@@ -40,7 +47,7 @@ void img_writer::writer(void) {
 
 						img.set_pixel(i, j, tout_r, tout_g, tout_b);
 						wait();
-
+						data_valid = in->d_read(rgb);
 				}
 		}
 

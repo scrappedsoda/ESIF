@@ -29,6 +29,10 @@ class channel_write_if: virtual public sc_interface
 class channel_read_if: virtual public sc_interface
 {
 		public:
-				virtual std::tuple<sc_uint<8>, sc_uint<8>, sc_uint<8>> d_read() = 0;
+				/**
+				 * @param rgb vector (out)
+				 * @return wether the data was valid
+				 */
+				virtual bool d_read(std::tuple<sc_uint<8>, sc_uint<8>, sc_uint<8>> &rgb) = 0;
 };
 

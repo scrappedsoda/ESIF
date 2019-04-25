@@ -32,9 +32,6 @@ SC_MODULE(SYSTEM) {
 	channel *cha0;
 	channel *cha1;
 
-    sc_signal<sc_uint<8>> sig_in_r, sig_in_g, sig_in_b, sig_out_r, sig_out_g,
-        sig_out_b;
-
     sc_clock sig_clk;
 
     SC_CTOR(SYSTEM) : sig_clk("clk_sig", 10, SC_NS) {
@@ -74,7 +71,8 @@ int sc_main(int argc, char *argv[]) {
     // put everything into a vcd file
     sc_trace_file *wf = sc_create_vcd_trace_file("main");
     // variables to be traced
-//    sc_trace(wf, top->sig_in_r, "sig_in_r");
+    // sc_trace(wf, top->grey_scale0->in, "greyscale_in");
+//    sc_trace(
 //    sc_trace(wf, top->sig_in_g, "sig_in_g");
 //    sc_trace(wf, top->sig_in_b, "sig_in_b");
 //    sc_trace(wf, top->sig_out_r, "sig_out_r");
