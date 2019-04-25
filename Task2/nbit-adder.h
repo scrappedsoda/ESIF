@@ -28,6 +28,7 @@ SC_MODULE (nbit_adder) {
 		sc_in<sc_uint<size> > in_a;
 		sc_in<sc_uint<size> > in_b;
 		sc_in<bool> in_cin;
+		sc_in<bool> in_clk;
 
 		sc_out<sc_uint<size> > out_s;
 		sc_out<bool> out_c;
@@ -72,7 +73,8 @@ SC_MODULE (nbit_adder) {
 
 			// The methods to split the input vectors
 			SC_METHOD(split);
-			sensitive << in_a << in_b << in_cin;
+			sensitive << in_clk;
+//			sensitive << in_a << in_b << in_cin;
 			// The method which merges the output vectors
 			SC_METHOD(merge);
 			for (int i = 0; i < size; i++) {

@@ -50,9 +50,10 @@ SC_MODULE(tb)
 		void source(void);		// creates the values
 		void sink(void);		// reads the values
 
-		SC_CTOR(tb)
+		SC_CTOR(tb) 
 		{
-				SC_CTHREAD(source, in_clk.pos() );
+				SC_CTHREAD(source, in_clk.neg() );	// sensitive to the neg edge to set 
+													// data before the rising edge
 				SC_CTHREAD(sink, in_clk.pos() );
 				generatePatterns();
 		}
@@ -87,8 +88,8 @@ void tb<size>::source(void) {
 			in_a.write(tmp_a);
 			in_b.write(tmp_b);
 			in_cin.write(tmp_c);
-			cout << i << ":\t a:" << tmp_a.to_int() << ",\t b:" << tmp_b.to_int() << endl;
 			wait();
+			cout << i << ":\t a:" << tmp_a.to_int() << ",\t b:" << tmp_b.to_int() << endl;
 		}
 }
 
@@ -99,6 +100,7 @@ void tb<size>::sink(void) {
 		bool tmp_c;
 		// Read output from the DUT
 		wait();
+		wait(); // needed to time the ASSERTS correct with the rising edge
 		  
 		for( int i = 0; i < RUNS; i++)
 		{
@@ -110,6 +112,7 @@ void tb<size>::sink(void) {
 			ASSERT(pattern.expectedCarry == tmp_c, 
 				"carry error expected " << pattern.expectedCarry << " actual: " << tmp_c);
 			cout << i << ":\t s:" << tmp_s.to_int() << ",\t c:" << tmp_c << endl;
+			cout << "------------------------" << endl;
 			wait();
 		}
 

@@ -46,6 +46,7 @@ SC_MODULE( SYSTEM) {
 
 				  
 				add0 = new nbit_adder<width>("add0");
+				add0 -> in_clk(sig_clk);
 				add0 -> in_a(sig_a);
 				add0 -> in_b(sig_b);
 				add0 -> in_cin(sig_cin);
