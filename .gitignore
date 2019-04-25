@@ -12,3 +12,6 @@ Task2/main
 Task3/main
 Task3/*.cpp.o
 Task2/main-fa
+Task4/main
+Task4/*.cpp.o
+Task4/test_out.bmp
