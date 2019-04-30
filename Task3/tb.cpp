@@ -12,13 +12,13 @@
 //#define ASSERT(expr, message) do {assert(expr);}while(0)
 
 // comment this define to suppress output
-#define DEBUG
+//#define DEBUG
 
 void tb::source() {
 		sc_uint<8> tmp_r, tmp_g, tmp_b;
 
 		// after the negative edge wait another edge
-		wait();
+		//wait();
 		// wait 3 ms to get the in the middle of the low part
 		wait(3, SC_NS);
 
@@ -89,6 +89,7 @@ void tb::sink(void) {
 		}
 		
 		// The image part
+		wait();
 		for (int i = sink_width-1; i >= 0; i--) {
 				for (int j = sink_height-1; j >= 0; j--) {
 

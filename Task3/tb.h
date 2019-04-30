@@ -38,7 +38,7 @@ SC_MODULE(tb)
 				SC_THREAD(source);
 				sensitive << in_clk.neg();
 				SC_THREAD(sink);
-				sensitive << in_clk.pos();
+				sensitive << in_clk.neg();
 
 //				SC_CTHREAD(source, in_clk.neg() );
 //				SC_CTHREAD(sink, in_clk.pos() );
