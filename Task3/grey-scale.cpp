@@ -14,7 +14,7 @@
 void grey_scale::greyifer(void) {
 		sc_uint<8> coeffs[] = {19, 38, 7};
 		sc_uint<16> sig_rm, sig_gm, sig_bm;
-		sc_uint<8> tmp = 0;
+		sc_uint<18> tmp = 0;
 
 		sig_rm = grey_scale::in_r.read() * coeffs[0];
 		sig_gm = grey_scale::in_g.read() * coeffs[1];
@@ -23,13 +23,13 @@ void grey_scale::greyifer(void) {
 // here i divide by 64 by shifting 7 bits
 // and add them together 
 // shifting happens by only selecting the chosen ones
-		tmp += sig_rm.range(13,6);
-		tmp += sig_gm.range(13,6);
-		tmp += sig_bm.range(13,6);
+		tmp += sig_rm; //.range(13,6);
+		tmp += sig_gm; //.range(13,6);
+		tmp += sig_bm; //.range(13,6);
 
-		grey_scale::out_r.write( tmp);
-		grey_scale::out_g.write( tmp);
-		grey_scale::out_b.write( tmp);
+		grey_scale::out_r.write( tmp.range(13,6));
+		grey_scale::out_g.write( tmp.range(13,6));
+		grey_scale::out_b.write( tmp.range(13,6));
 
 }
 
